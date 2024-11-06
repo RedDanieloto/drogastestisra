@@ -6,11 +6,9 @@
     "dev": "node ace serve --watch",
     "build": "node ace build --production",
     "start": "node server.js",
-   
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
     "test": "npx japa tests/**/*.spec.ts"
-
   },
   "eslintConfig": {
     "extends": [
@@ -41,14 +39,14 @@
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.6",
-    "@japa/preset-adonis": "^1.2.0",
+    "@adonisjs/lucid": "^16.0.0",
     "@japa/assert": "^3.0.0",
+    "@japa/preset-adonis": "^1.2.0",
     "@japa/runner": "^2.5.1",
     "@types/proxy-addr": "^2.0.3",
     "@types/source-map-support": "^0.5.10",
     "adonis-preset-ts": "^2.1.0",
     "eslint": "^9.14.0",
-    "@adonisjs/lucid": "^16.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-adonis": "^2.1.1",
     "eslint-plugin-prettier": "^5.2.1",
