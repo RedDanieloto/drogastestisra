@@ -1,25 +1,58 @@
-/*
-|--------------------------------------------------------------------------
-| Routes
-|--------------------------------------------------------------------------
-|
-| This file is dedicated for defining HTTP routes. A single file is enough
-| for majority of projects, however you can define routes in different
-| files and just make sure to import them inside this file. For example
-|
-| Define routes in following two files
-| ├── start/routes/cart.ts
-| ├── start/routes/customer.ts
-|
-| and then import them inside `start/routes.ts` as follows
-|
-| import './routes/cart'
-| import './routes/customer'
-|
-*/
+import router from '@adonisjs/core/services/router'
+import { middleware } from '#start/kernel'
 
-import Route from '@ioc:Adonis/Core/Route'
+// Importa el controlador
+import UsersController from '#controllers/users_controller'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
+// Crea una instancia del controlador
+const usersController = new UsersController()
+
+// Rutas públicas
+router.group(() => {
+  // Ruta para crear un nuevo usuario
+  router.post('users', async (ctx) => {
+
+    return usersController.create(ctx)
+  })
+
+  // Ruta para iniciar sesión
+  router.post('login', async (ctx) => {
+
+    return usersController.login(ctx)
+  })
+}).prefix('api/v1')
+
+// Rutas protegidas
+router.group(() => {
+  // Ruta para obtener información del usuario autenticado
+  router.get('me', async (ctx) => {
+
+    return usersController.me(ctx)
+  })
+
+  // Ruta para listar todos los usuarios
+  router.get('users', async (ctx) => {
+
+    return usersController.index(ctx)
+  })
+
+  // Ruta para mostrar un usuario por ID
+  router.get('users/:id', async (ctx) => {
+
+    return usersController.show(ctx)
+  })
+
+  // Ruta para actualizar un usuario
+  router.put('users/:id', async (ctx) => {
+
+    return usersController.update(ctx)
+  })
+
+  // Ruta para eliminar un usuario
+  router.delete('users/:id', async (ctx) => {
+
+    return usersController.destroy(ctx)
+  })
 })
+  .prefix('api/v1')
+  .use(middleware.auth({ guards: ['api'] }))
